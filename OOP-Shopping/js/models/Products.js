@@ -1,8 +1,8 @@
-class Products {
-    constructor(parent, products) {
-        this.parent = parent;
-        this.products = products;
-        this.parent.addEventListener("click", this)
+import Display from "./display.js";
+class Products extends Display {
+    constructor(parent, products, cart) {
+        super(parent, products)
+        this.cart = cart
     }
 
     showProducts() {
@@ -23,10 +23,10 @@ class Products {
     }
     productImg(data) {
         const { alt, image } = data;
-        const imgJsx = `<img alt="${alt}" src="${image}"/> `
+        const imgJSX = `<img alt="${alt}" src="${image}"/> `
 
 
-        return imgJsx
+        return imgJSX
     }
     productInfo(data) {
         const { id, name, price } = data;
@@ -34,7 +34,7 @@ class Products {
         <div id="product-info">
             <h3>${name}</h3>
         <div>
-            <span>${price}</span>
+            <span>$ ${price}</span>
             <button data-id=${id}>+</button>
         </div>
         </div>
@@ -48,7 +48,10 @@ class Products {
         }
     }
     addToCart(id) {
-        console.log(id);
+        const product = this.products.find(i => i.id === +id)
+        this.cart.products.push(product)
+        this.cart.showProducts()
+
     }
 }
 
